@@ -12,7 +12,7 @@ app.secret_key=b'\xa8\x90\xba\x9e\x95\xbfh\x15\xee:\x14;'
 mydatabase = mysql.connector.connect(
     host = "127.0.0.1",
     username = "root",
-    password = "!123qweqwe",
+    
     database = "website"
 )
 
