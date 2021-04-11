@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成功登入</title>
+    <style>
+        * { margin:0px; padding:0px; }
+        body { font-size:18px; }
+        .topic{ text-align:center; background-color:skyblue; color:#000; padding-top:20px; padding-bottom:20px; width:100%; margin:10px auto; }
+        .text p{ text-align:center; margin-top:10px; }
+        .button { border:1px solid gray; width:80px; border-radius:8%; display:block; margin:10px auto; }
+    </style>
+</head>
+<body>
+    <div class="topic">
+        <h3>歡迎光臨，這是會員頁</h3>
+    </div>
+    <div class="text">
+        <p>{{titlename}}恭喜您！成功登入系統</p>
+    </div>
+    <form action="/signout" >
+        <input type="submit" class="button" name="logout" value="登出系統">
+    </form>
+
+    <div method="get" action="/member" class="form">
+        <h1 class = "content">查詢會員姓名</h1>
+        <input type = "text" class = "form" id = "find" name = "username"/ >
+        <button class="btn" id = "id">查詢</button>
+        <div id = "search">   </div>
+
+    </div>
+
+</body>
+
+<script>
+
+    var btn = document.getElementById("id");
+    console.log(btn)
+    var handler = function(){
+        var username_value = document.getElementById("find").value;
+        // console.log(username_value)
+        // console.log(typeof(username_value))
+        let src = ("http://127.0.0.1:3000/api/user?username="+username_value);
+        console.log(src)
+
+        fetch(src).then(function(response){
+    
+            return response.json(); //將資料用 JSON 的格式詮釋成：物件和陣列的組合
+        }).then(function(result){     
+        console.log(result)
+        var find_name = result.data.name;
+        let find_username = result.data.username;
+
+        console.log(find_name)
+        console.log(find_username)
+
+    var titlebox = document.createElement('div');
+    titlebox.className = 'form';
+  
+
+    var titlename = document.createElement('span');
+    titlebox.appendChild(titlename);
+    titlename.innerText = find_name;
+    
+    var titlename = document.createElement('span');
+    titlebox.appendChild(titlename);
+    titlename.innerText = "(" +find_username +")";
+
+
+    document.getElementById("search").appendChild(titlebox);
+ 
+    });
+    };
+    btn.addEventListener("click", handler);
+</script>
+
+</html>
